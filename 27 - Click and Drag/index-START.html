@@ -36,6 +36,35 @@
   </div>
 
 <script>
+  const slide = document.querySelector('.items');
+  let isDown =false;
+  let startX;
+  let scrollLeft;
+
+  slide.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slide.classList.add('active');
+      startX = e.pageX - slide.offsetLeft;
+      scrollLeft = slide.offsetLeft;
+  });
+
+  slide.addEventListener('mouseleave', () => {
+      isDown = false;
+      slide.classList.remove('active');
+  });
+
+  slide.addEventListener('mouseup', () => {
+      slide.classList.remove('active');
+      isDown = false;
+  });
+
+  slide.addEventListener('mousemove', (e) => {
+    if (!isDown) return; // stops the fn from running.
+    e.preventDefault();
+    const x = e.pageX - slide.offsetLeft;
+    const walk = (x - startX) * 3;
+    slide.scrollLeft = scrollLeft - walk;
+  });
 </script>
 
   </body>
